@@ -3,7 +3,11 @@ package sms;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import java.awt.*;
-public class addDetails extends JFrame {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+
+public class addDetails extends JFrame implements ActionListener {
 
     int x = 80;
     int txtX = 250;
@@ -11,10 +15,15 @@ public class addDetails extends JFrame {
     int txtHeight = 40;
 
     Font font = new Font("Tahoma", Font.BOLD,20);
+    Font fontTxt = new Font("Tahoma", Font.PLAIN,20);
 
+    JRadioButton male, female;
     JDateChooser dob ;
+    JButton add;
+JComboBox bldGrp;
+    JTextField name, address, aadhar, phoneNo;
     addDetails(){
-        setSize(600,900);
+        setSize(600,700);
 
         JLabel l1  = new JLabel("Name");
         l1.setBounds(x,70,150,40);
@@ -53,51 +62,102 @@ public class addDetails extends JFrame {
 
 
 
-        JTextField name = new JTextField();
+         name = new JTextField();
         name.setBounds(txtX, 70,  txtWidth,txtHeight);
+        name.setFont(fontTxt);
         add(name);
 
-        JTextField aadhar = new JTextField();
+         aadhar = new JTextField();
         aadhar.setBounds(txtX, 130,  txtWidth,txtHeight);
+        aadhar.setFont(fontTxt);
         add(aadhar);
 
-        JTextField address = new JTextField();
+         address = new JTextField();
         address.setBounds(txtX, 310,  txtWidth,txtHeight);
+        address.setFont(fontTxt);
         add(address);
 
-        JTextField phoneNo = new JTextField();
+         phoneNo = new JTextField();
         phoneNo.setBounds(txtX, 370,  txtWidth,txtHeight);
+        phoneNo.setFont(fontTxt);
         add(phoneNo);
 
 //        dob calender
 
         dob = new JDateChooser();
         dob.setBounds(txtX, 190, txtWidth, txtHeight);
+        dob.setFont(fontTxt);
         add(dob);
 
         ButtonGroup btn = new ButtonGroup();
 
 
-        JRadioButton male = new JRadioButton("Male");
+         male = new JRadioButton("Male");
         male.setBounds(txtX, 250, txtWidth/2, txtHeight);
+        male.setFont(fontTxt);
         btn.add(male);
         add(male);
 
-        JRadioButton female = new JRadioButton("Female");
+         female = new JRadioButton("Female");
         female.setBounds(txtX+120, 250, txtWidth/2, txtHeight);
+        female.setFont(fontTxt);
         btn.add(female);
         add(female);
 
         String [] arr = {"A+", "AB+","O+","O-","AB-"};
-        JComboBox bldGrp = new JComboBox(arr);
+        bldGrp = new JComboBox(arr);
          bldGrp.setBounds(txtX,430, txtWidth,txtHeight );
+         bldGrp.setFont(fontTxt);
          add(bldGrp);
+
+
+         add = new JButton("Add Details");
+         add.setBounds(200,580,150,70);
+         add.setFont(font);
+         add.addActionListener(this);
+         add(add);
 
         setLayout(null);
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    public void actionPerformed(ActionEvent ae){
+
+        if(ae.getSource()==add){
+         String name =  this.name.getText();
+         String aadhar = this.aadhar.getText();
+         String phoneNo = this.phoneNo.getText();
+         String address = this.address.getText();
+
+         String bldgrp = (String)this.bldGrp.getSelectedItem();
+
+         String gender = null;
+         if(male.isSelected()){
+             gender = "Male";
+         }
+         else if(female.isSelected()){
+             gender = "Female";
+         }
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String dob = dateFormat.format(this.dob.getDate());
+
+           conn c = new conn();
+
+           String query = "insert into stud_details (name, address, contact, aadhar, dob, gender, bldgrp) values ('"+name+"','"+address+"','"+phoneNo+"', '"+aadhar+"','"+dob+"','"+gender+"','"+bldgrp+"')";
+
+          try{
+            c.s.executeUpdate(query);
+            JOptionPane.showMessageDialog(null, "Data Added Successfully!");
+          }catch (Exception e){
+              System.out.println(e);
+              JOptionPane.showMessageDialog(null, "Some error occured :(");
+          }
+
+        }
+
+    }
 
 
     public static void main(String[] args) {
