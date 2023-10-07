@@ -20,7 +20,7 @@ public class addDetails extends JFrame implements ActionListener {
     JRadioButton male, female;
     JDateChooser dob ;
     JButton add;
-JComboBox bldGrp;
+    JComboBox bldGrp;
     JTextField name, address, aadhar, phoneNo;
     addDetails(){
         setSize(600,700);
@@ -140,20 +140,24 @@ JComboBox bldGrp;
              gender = "Female";
          }
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            String dob = dateFormat.format(this.dob.getDate());
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            String dob = df.format(this.dob.getDate());
+            System.out.println(dob);
 
-           conn c = new conn();
+            conn c = new conn();
 
-           String query = "insert into stud_details (name, address, contact, aadhar, dob, gender, bldgrp) values ('"+name+"','"+address+"','"+phoneNo+"', '"+aadhar+"','"+dob+"','"+gender+"','"+bldgrp+"')";
+            String query = "insert into stud_details (name, address, contact, aadhar, dob, gender, bldgrp) values ('"+name+"','"+address+"','"+phoneNo+"', '"+aadhar+"','"+dob+"','"+gender+"','"+bldgrp+"');";
 
-          try{
-            c.s.executeUpdate(query);
-            JOptionPane.showMessageDialog(null, "Data Added Successfully!");
-          }catch (Exception e){
-              System.out.println(e);
-              JOptionPane.showMessageDialog(null, "Some error occured :(");
-          }
+            try{
+                c.s.executeUpdate(query);
+                JOptionPane.showMessageDialog(null, "Data Added Successfully!");
+            }catch (Exception e){
+                System.out.println(e);
+                JOptionPane.showMessageDialog(null, "Some error occured :(");
+            }
+
+
+
 
         }
 
