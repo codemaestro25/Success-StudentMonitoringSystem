@@ -10,6 +10,9 @@ public class viewMarks extends JFrame {
     JTabbedPane tabs;
     JScrollPane sp1, sp2;
     JTable sem1, sem2;
+    JButton addMarks;
+
+
     viewMarks(){
         setSize(1000,700);
 
@@ -31,6 +34,13 @@ public class viewMarks extends JFrame {
 
         tabs.addTab("SEM 1", sp1);
         tabs.addTab("SEM 2", sp2);
+
+        addMarks = new JButton("Add/Update");
+        addMarks.setBounds(60,120,150,50);
+        add(addMarks);
+
+
+
 
         setLayout(null);
         setLocationRelativeTo(null);
