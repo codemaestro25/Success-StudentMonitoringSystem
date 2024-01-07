@@ -9,12 +9,12 @@ public class conn {
     Statement s;
     conn(){
         String username = "root";
-        String password = "";
+        String password = "12345678";
         String url = "jdbc:mysql://localhost:3306/studmonsys";
         try{
           c = DriverManager.getConnection(url, username,password);
           s = c.createStatement();
-            System.out.println("Jud gaya!");
+            System.out.println("connetion successful!!");
 
         }catch (Exception e){
             System.out.println("Connection failed");
